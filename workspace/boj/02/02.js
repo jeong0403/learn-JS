@@ -18,4 +18,10 @@
 예제 출력 1
 A
 */
+const fs = require("fs");
+const input = fs.readFileSync(0).toString().trim().split(" ");
+const score = parseInt(input);
 
+const result = score >= 90 ? "A" : score >= 80 ? "B" : score >= 70 ? "C" : score >= 60 ? "D" : "F";
+
+console.log(result);
