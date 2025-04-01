@@ -44,12 +44,27 @@
 예제 출력 2
 4
 */
+// x > 0, 1사분면 4사분면
+// x < 0, 2사분면 3사분면
+// y > 0, 1사분면 2사분면
+// y < 0, 3사분면 4사분면
+// x > 0, y > 0, 1사분면
+// x < 0, y > 0, 2사분면
+// x < 0, y < 0, 3사분면
+// x > 0, y < 0, 4사분면
 
 const fs = require("fs");
-const inPut = fs.readFileSync(0).toString().trim().split("\n");
+const input = fs.readFileSync(0).toString().trim().split("\n");
 
-const x = parseInt(inPut[0]);
-const y = parseInt(inPut[1]);
+const x = parseInt(input[0]);
+const y = parseInt(input[1]);
 
-// const result = x > 0 ? "1" : "2"
-// const result = y > 0 ? "1" : "3"
+if (x > 0 && y > 0) {
+  console.log(1);
+} else if (x > 0 && y < 0){
+  console.log(4);
+} else if (x < 0 && y > 0){
+  console.log(2);
+} else {
+  console.log(3);
+}

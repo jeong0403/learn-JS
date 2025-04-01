@@ -38,3 +38,53 @@
 600
 */
 
+// const fs = require("fs");
+// const input = fs.readFileSync(0).toString().trim().split(" ");
+
+// const a = parseInt(input[0]);
+// const b = parseInt(input[1]);
+// const c = parseInt(input[2]);
+
+// if (a === b === c){
+//   console.log(10000 + a*1000);
+// } else if (a === b || a === c){
+//   console.log(1000 + a*100);
+// } else if (b === c ){
+//   console.log(1000 + b*100);
+// } else {
+  
+// }
+
+// if (a === b === c){
+//   console.log(10000 + a*1000);
+// } else if (a > b > c || a > c > b){
+//   console.log(a*100);
+//   } else if (b > a > c || b > c > a){
+//     console.log(b*100);
+//   } else if (c > a > b || c > b > a) {
+//     console.log(c*100);
+//   } else if (a === b){
+//     console.log(1000 + a*100);
+//   } else if (b === c){
+//     console.log(1000 + b*100);
+//   } else {
+//     console.log(1000 + c*100);
+//   }
+
+const fs = require("fs");
+let input = fs.readFileSync(0).toString().trim().split(" ");
+
+const a = parseInt(input[0]);
+const b = parseInt(input[1]);
+const c = parseInt(input[2]);
+
+if (a === b && b === c) {
+  console.log(10000 + a*1000);
+} else if (a === b || a === c){
+  console.log(1000 + a*100);
+} else if (b === c){
+  console.log(1000 + b*100);
+} else {
+  console.log(Math.max(a, b, c) * 100);
+}
+
