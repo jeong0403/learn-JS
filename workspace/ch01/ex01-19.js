@@ -2,3 +2,35 @@
 switch문
 */
 
+const pingName = "꾸래핑";
+let modifier;
+
+switch (pingName) {
+  case "하츄핑":
+    modifier = "사랑의";
+  case "포실핑":
+    modifier = "복슬복슬";
+  case "눈꽃핑":
+    modifier = "차가운";
+  case "꾸래핑":
+    modifier = "거짓말쟁이";
+  case "빛나핑":
+    modifier = "밝은";
+  case "머핑":
+    modifier = "달콤한";
+    break;
+  // default:
+  // modifier = "모르는";
+}
+
+console.log(`${modifier} ${pingName}`);
+
+
+let fruit = 'apple';
+
+switch (fruit) {
+  case 'apple':
+    console.log('사과입니다.');
+  case 'banana':
+    console.log('바나나입니다.');
+}

@@ -35,11 +35,27 @@ A와 B가 같은 경우에는 '=='를 출력한다.
 ==
 */
 
+// 삼항 연산자 풀이 방식
+// const fs = require("fs");
+// const inPut = fs.readFileSync(0).toString().trim().split(" ");
+
+// const a = parseInt(inPut[0]);
+// const b = parseInt(inPut[1]);
+// // const result = a > b ? ">" : "<";
+// const result = a > b ? ">" : (a < b ? "<" : "==");
+// console.log(result);
+
+// 조건문 사용하기
 const fs = require("fs");
 const inPut = fs.readFileSync(0).toString().trim().split(" ");
 
 const a = parseInt(inPut[0]);
 const b = parseInt(inPut[1]);
-// const result = a > b ? ">" : "<";
-const result = a > b ? ">" : (a < b ? "<" : "==");
-console.log(result);
+
+if (a > b) {
+  console.log('>');
+} else if (a < b) {
+  console.log('<');
+} else {
+  console.log('==');
+}
