@@ -12,11 +12,10 @@
 // ...
 // consle.log(10);
 
-// let i = 0;
-// while (i <= 10) {
-
-//   console.log(i);
-// }
+let i = 0;
+while (i <= 10) {
+  console.log(i++);
+}
 
 // // 1부터 10까지의 모든 수의 합계를 출력
 // i = 1;
@@ -30,10 +29,10 @@
 // console.log(sum);
 
 
-let sum = 0;
-let i = 0;
-while( i < 10){
-  ++i;
-  sum += i;
-}
-console.log(sum);
+// let sum = 0;
+// let i = 0;
+// while( i < 10){
+//   ++i;
+//   sum += i;
+// }
+// console.log(sum);

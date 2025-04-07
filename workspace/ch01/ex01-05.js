@@ -2,12 +2,15 @@
 변수 선언
 */
 
-var a;
-var b, c;
-var d = 10;
-var e = 100, f = 200;
+var a; // 변수 선언
+a = 100; // 변수 초기화
 
-var user = "하츄핑";
+
+var b, c; // 변수 두 개 선언
+var d = 10; // 변수 선언 + 초기화 (가장 추천하는 방식)
+var e = 100, f = 200; // 변수 두 개 선언 + 초기화
+
+var user = "하츄핑"; // user나 user2는 문자를 할당 받았기 때문에, string type이 된다
 var user2 = "아자핑";
 
 var messeage = '아자핑이 "안녕하세요." 라고 말했다.';
