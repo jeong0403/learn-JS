@@ -9,11 +9,11 @@
     console.log('Hello Javascript - 1'); // 메서드 (객체에 정의한 함수)
 
     // HTML 코드 파싱이 완료된 후에 발생
-    window.addEventListener('load', function(){
+    window.addEventListener('load', function(){ // window라는 객체
       //버튼에 클릭 이벤트 추가
       // 함수 내부에 선언된 지역 변수
       const btn = document.querySelector('button'); 
-      btn.addEventListener('click', function(){ // 이벤트가 발생했을 때 실행하는 함수
+      btn.addEventListener('click', function(){ // btn라는 객체, 이벤트가 발생했을 때 실행하는 함수
         console.log('버튼 클릭! - 2');
         
         const imgE = document.querySelector('img');
@@ -34,6 +34,7 @@
     console.log('Hello Javascript - 4');
 
     //버튼에 클릭 이벤트 추가
+    // document 객체, console 객체, btn 객체
     const btn = document.querySelector('button'); // global scope, 전역 변수
     btn.addEventListener('click', function(){
       console.log('버튼 클릭! - 1');

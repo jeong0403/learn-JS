@@ -1,53 +1,26 @@
 /*
+TODO Object 생성자 함수
 new Object() - 생성자 함수로 객체 생성
 */
 
-// 원시형 데이터 타입 방식
-// 회원의 속성
-const userName1 = '몰라핑';
-const userNo1 = 3;
-const userGender1 = 'male';
-const userLevel1 = 'diamond';
-const userPassword1 = '1234';
-const userAge1 = 6;
-const userEmail1 = 'uzoolove@gmail.com';
+// 생성자 방식
+// 대괄호 표기법 : 속성명이 변수이거나 특수 문자나 공백이 포함될 때 사용
+const foo = new Object();
+// const foo = null; null.name과 같이 속성명 할당할 수 없다고 오류 뜸!
+// console.log(foo);
 
-console.log(userName1, userAge1);
+foo.name = '함수핑';
+foo['age'] = 6;
+foo.job = '마법사';
+foo['married'] = false;
 
-// 호정핑 회원의 속성
-const userName2 = '호정핑';
-const userNo2 = 4;
-const userGender2 = 'female';
-const userLevel2 = 'gold';
-const userPassword2 = '1234';
-const userAge2 = 30;
-const userEmail2 = 'hojeong@gmail.com';
+// 함수핑 6 마법사 false
+console.log(foo['name'], foo['age'], foo.job, foo.married);
+// object {name: '함수핑', age: 6, job: '마법사', married: false}
+console.log(typeof foo, foo);
 
-console.log(userName2, userAge2);
-
-
-//
-// 몰라핑 회원의 속성(객체, Object)
-const user1 = new Object();
-user1.userName = "몰라핑";
-user1.userNo = 3;
-user1.userGender = "male";
-user1.userLevel = "diamond";
-user1.userPassword = "1234";
-user1.userAge = 6;
-user1.userEmail = "uzoolove@gmail.com";
-
-console.log(user1.userName, user1.userAge);
-
-
-// 호정핑 회원의 속성(객체, Object)
-const user2 = new Object();
-user2.userName = '호정핑';
-user2.userNo = 4;
-user2.userGender = 'female';
-user2.userLevel = 'gold';
-user2.userPassword = '1234';
-user2.userAge = 30;
-user2.userEmail = 'hojeong@gmail.com';
-
-console.log(user2.userName, user2.userAge);
+// [ ] 다시 보기
+// const key = 'job';
+// foo[key]
+// console.log(foo[key]);
+// console.log(foo.job);

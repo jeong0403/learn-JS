@@ -16,9 +16,9 @@ function getData() {
 
   const result = new Object();
 
-  result.a = parseInt(fileData[0]);
-  result.b = parseInt(fileData[1]);
-  result.c = parseInt(fileData[2]);
+  result.a = isNaN(fileData[0]) ? fileData[0] : Number(fileData[0]);
+  result.b = isNaN(fileData[1]) ? fileData[1] : Number(fileData[1]); 
+  result.c = isNaN(fileData[2]) ? fileData[2] : Number(fileData[2]);
 
   return result; // return 함수에 값을 1개 밖에 못 적음!
 }
