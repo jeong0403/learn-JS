@@ -18,10 +18,42 @@
 예제 출력 1
 A
 */
-const fs = require("fs");
-const input = fs.readFileSync(0).toString().trim().split(" ");
-const score = parseInt(input);
 
-const result = score >= 90 ? "A" : score >= 80 ? "B" : score >= 70 ? "C" : score >= 60 ? "D" : "F";
+// 기존 코드
+// const fs = require("fs");
+// const input = fs.readFileSync(0).toString().trim().split(" ");
+// const score = parseInt(input);
 
-console.log(result);
+// const result = score >= 90 ? "A" : score >= 80 ? "B" : score >= 70 ? "C" : score >= 60 ? "D" : "F";
+
+// console.log(result);
+
+
+// 바꾼 코드
+function main(){
+  const data = getData();
+  // data에서 값을 꺼내서 문제 해결하는 코드 작성
+  if (data >= 90) {
+    console.log('A');
+  } else if (data >= 80) {
+    console.log('B');
+  } else if (data >= 70) {
+    console.log('C');
+  } else if (data >= 60) {
+    console.log('D');
+  } else {
+    console.log('F');
+  }
+}
+main();
+
+/**
+ * 표준 입력장치(콘솔)에서 한 줄로 입력된 두 건의 데이터를 읽어서 반환한다.
+ * @returns {string|number} 읽은 데이터(숫자일 경우 number로 형변환)
+ */
+function getData() {
+  const fs = require("fs");
+  const fileData = fs.readFileSync(0).toString().trim();
+  const result = isNaN(fileData) ? fileData : Number(fileData);
+  return result;
+}

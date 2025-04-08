@@ -56,6 +56,7 @@
 // m < 45 & h > 0 -> ${h - 1} ${m + 60 - 45} => ${h - 1} {m + 15}
 // m < 45 & h === 0 -> 23 ${m + 15}
 
+/* 기존 코드
 const fs = require("fs");
 const input = fs.readFileSync(0).toString().trim().split(" ");
 
@@ -71,3 +72,82 @@ if (m >= 45) {
     console.log(23, m + 15);
   }
 }
+*/
+
+// 바꾼 코드
+function main(){
+  const data = getData();
+  // data에서 값을 꺼내서 문제 해결하는 코드 작성
+  let h = data.a;
+  let m = data.b;
+
+  if (m < 45) {
+    h--;
+    if (h < 0) h += 24; // h가 0일 경우에 시간 보정이 필요함
+    m += 60;
+  }
+
+  m -= 45;
+
+  console.log(h + ' ' + m);
+}
+main();
+
+/**
+ * 표준 입력장치(콘솔)에서 한 줄로 입력된 두 건의 데이터를 읽어서 숫자로 변환한 후
+ * 객체에 a, b 속성으로 저장하여 반환한다.
+ * @returns {object} a , b 속성에 입력값이 저장된 객체
+ */
+function getData() {
+  const fs = require("fs");
+  const fileData = fs.readFileSync(0).toString().trim().split(" ");
+
+  const result = new Object();
+
+  result.a = isNaN(fileData[0]) ? fileData[0] : Number(fileData[0]);
+  result.b = isNaN(fileData[1]) ? fileData[1] : Number(fileData[1]);
+
+  return result; // return 함수에 값을 1개 밖에 못 적음!
+}
+
+// 다른 방법1
+/*
+function main(){
+  const data = getData();
+  let h = data.a;
+  let m = data.b;
+m -= 45;
+if(m < 0){
+    m += 60;
+    h -= 1;
+
+    if(h < 0){
+        h = 23;
+    }
+}
+m -= 45;
+
+  console.log(h + ' ' + m);
+}
+main();
+*/
+
+/* 다른 방법2
+function main() {
+  const data = getData();
+  let h = data.a;
+  let m = data.b;
+
+  // 전체 분으로 환산
+  let totalMin = h * 60 + m - 45;
+
+  // 음수면 하루 더하기
+  if (totalMin < 0) totalMin += 60 * 24;
+
+  // 시:분으로 변환
+  h = Math.floor(totalMin / 60);
+  m = totalMin % 60;
+
+  console.log(h + " " + m);
+}
+*/

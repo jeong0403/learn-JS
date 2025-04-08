@@ -28,15 +28,43 @@
 */
 //윤년은 연도가 4의 배수이면서, 100의 배수가 아닐 때 또는 400의 배수일 때이다.
 
+// 기존 코드
 const fs = require("fs");
 const inPut = fs.readFileSync(0).toString().trim().split(" ");
 
 const a = parseInt(inPut[0]);
 
-if (a % 4 == 0 && (a % 100 !== 0)) {
+if (a % 4 === 0 && (a % 100 !== 0)) {
   console.log(1);
-} else if (a % 400 == 0) {
+} else if (a % 400 === 0) {
   console.log(1);
 } else {
   console. log(0);
+}
+
+// 바꾼 코드
+function main(){
+  const data = getData();
+  // data에서 값을 꺼내서 문제 해결하는 코드 작성
+  let result = 0; // 초기값은 윤년이 아님
+
+  // 윤년이 되는 경우
+  // 4의 배수 && (100의 배수가 아니거나 400의 배수)
+  if (data % 4 === 0 && (data % 100 !== 0 || data % 400 === 0)) {
+    result = 1;
+  }
+  
+  console.log(result);
+}
+main();
+
+/**
+ * 표준 입력장치(콘솔)에서 한 줄로 입력된 두 건의 데이터를 읽어서 반환한다.
+ * @returns {string|number} 읽은 데이터(숫자일 경우 number로 형변환)
+ */
+function getData() {
+  const fs = require("fs");
+  const fileData = fs.readFileSync(0).toString().trim();
+  const result = isNaN(fileData) ? fileData : Number(fileData);
+  return result;
 }
