@@ -1,7 +1,7 @@
 function main(){
   const data = getData();
   // data에서 값을 꺼내서 문제 해결하는 코드 작성
-  
+   console.log(data);
 }
 main();
 
@@ -27,15 +27,23 @@ function getData() {
   const fileData = fs.readFileSync(0).toString();
   // ['23 48', '25']
   const arr = fileData.trim().split("\n"); // 줄 단위로 먼저 자른다.
-
   const result = []; // 리턴할 2차원 배열
-  for (let i = 0; i < arr.length; i++) {
-    const row = arr[i]; // '23 48', '25' for문 2번 도는 상황이고 length = 2임
+  
+  // for (let i = 0; i < arr.length; i++) {
+  //   const row = arr[i]; // '23 48', '25' for문 2번 도는 상황이고 length = 2임
+  //   const rowArr = row.split(' '); // ['23', 48'], ['25']
+  //   for (let k = 0; k < rowArr.length; k++){
+  //     rowArr[k] = isNaN(rowArr[k]) ? rowArr[k] : parseInt(rowArr[k]);
+  //   }
+  //   result.push(rowArr);
+  // }
+
+  for (let row of arr) { // '23 48', '25'
     const rowArr = row.split(' '); // ['23', 48'], ['25']
-    for (let k = 0; k < rowArr.length; k++){
+      for (let k = 0; k < rowArr.length; k++){
       rowArr[k] = isNaN(rowArr[k]) ? rowArr[k] : parseInt(rowArr[k]);
     }
-    result.push(rowArr);
+    result.push(rowArr.length === 1 ? rowArr[0] : rowArr);
   }
-  return result;
+  return result.length === 1 ? result[0] : result; // 길이가 1줄이면 1개 값만 보내고 아니면 값 전부 보내
 }
