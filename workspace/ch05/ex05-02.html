@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Counter</title>
+  </head>
+  <body>
+    <header>
+      <h1>Counter</h1>
+    </header>
+    <div id="container">
+      <button class="btnMinus">-</button>
+      <span>0</span>
+      <button class="btnPlus">+</button>
+      <button class="btnReset">reset</button>
+      <script>
+        // container 하위의 button 요소 찾기
+        const btnMinus = document.querySelector(".btnMinus");
+        const countSpan = document.querySelector('#container > span');
+        const btnPlus = document.querySelector(".btnPlus");
+        const btnReset = document.querySelector(".btnReset");
+
+        btnMinus.addEventListener('click', function(){
+          const count = parseInt(countSpan.firstChild.nodeValue);
+          countSpan.firstChild.nodeValue = count - 1;
+        });
+        btnPlus.addEventListener('click', function(){
+          const count = parseInt(countSpan.firstChild.nodeValue);
+          countSpan.firstChild.nodeValue = count + 1;
+        });
+        btnReset.addEventListener('click', function(){
+          const count = parseInt(countSpan.firstChild.nodeValue);
+          countSpan.firstChild.nodeValue = 0;
+        });
+      </script>
+    </div>
+  </body>
+</html>

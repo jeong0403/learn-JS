@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>쇼핑목록</title>
+</head>
+<body>
+  <h1>쇼핑 목록</h1>
+  <p>마트에서 사야할 목록</p>
+  <ul id="purchases" class="list">
+    <li>두부</li>
+    <li>계란</li>
+    <li>라면</li>
+  </ul>
+  <!-- JS ES6 방식 -> type=module 방식을 사용하면, js파일끼리 서로 독립적으로 만들어서 쓸 수 있음
+   하나의 파일에서 전역변수로 사용하고 그 다음 파일에 사용하고 싶다면, 변수명에 window.을 붙이기 -->
+  <script type="module" src="ex05-01-02.js"></script>
+  <script type="module" src="ex05-01-03.js"></script>
+  <script type="module" src="ex05-01-04.js"></script>
+
+<!-- 기존 코드 -->
+<!-- <script>
+    // class 속성으로 노드 찾기
+  const shoppingList = document.getElementsByClassName("list")[0];
+
+    // 부모/자식, 형제 관계로 노드 찾기
+    // id가 "purchases"인 요소노드를 찾음
+    // const shoppingList = document.getElementById('purchases'); // ul
+  
+    // console.log(purchases);
+    // console.dir(purchases);
+    // 제일 먼저 구매해야 할 항목은 무엇인가?
+    // const liList = document.getElementsByTagName('li'); // [li, li, li] 유사배열객체로 넘어옴! 모든 li 요소를 배열로 가져옴
+    // console.log(liList);
+    // const firstLi = liList[0]; // <li>두부</li>
+
+    // 2. firstElementChild 사용: 직접 첫 번째 자식 요소 선택
+    const firstLi = shoppingList.firstElementChild; // <li>두부</li>
+    console.log(firstLi);
+
+    // firstChild를 사용하여 텍스트 노드 선택 (요소 노드의 실제 텍스트 내용)
+    const firsTextNode = firstLi.firstChild; // 두부 object
+      console.log(firsTextNode); // 텍스트 노드 객체 선택
+      console.log("제일 먼저 구매할 항목:", firsTextNode.nodeValue); // nodeValue로 실제 텍스트 값 출력
+      
+      // nodeValue를 사용하여 텍스트 내용 수정 (첫 번째 구매 항목 수정)
+      firsTextNode.nodeValue = '양파';
+
+      // 마지막으로 사야할 품목 출력
+      // const lastLi = shoppingList.lastElementSibling;
+      // consloe.log('마지막으로 사야할 품목', shoppingList.lastElementChild.firstChild.nodeValue);
+      // const lastLi = shoppingList.lastElementChild.firstChild;
+      // console.log("마지막으로 사야할 품목:", lastLi.nodeValue); // "라면"
+      console.log("마지막으로 사야할 품목:", shoppingList.lastElementChild.textContent); // 라면 
+      
+      // 마지막으로 사야할 품목 출력(querySelector)
+      console.log(document.querySelector('#purchases > li:last-child').firstChild.nodeValue); // #은 id 값 찾는 것이니, class명이나 ul써도 됨
+  </script> -->
+</body>
+</html>
