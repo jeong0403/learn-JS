@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>쇼핑목록</title>
+
+  <script>
+    /*
+    window 객체 > Document 객체
+
+    document로 'load'를 출력하면 -> console에 아무런 반응이 없다. (왜? 쓸 수가 없으니깐 => window로만 써야 함)
+
+    기본
+    (window.)document.addEventListner('DOMContentLoaded', ...)
+
+    가능 : document 를 window 로 위임
+    window.addEventLister('DOMContentLoaded', ...) 
+    */
+
+    // HTML 문서 로딩 완료(DOM 객체 생성 완료), 이미지, css 같은 외부 콘텐츠 로딩 완료 후에 발생하는 이벤트
+    // 거의 사용하지 않는 이벤트 (예전부터 사용하던 방식)
+    window.addEventListener('load', function(){});
+    // window.onload = function(){};과 같음
+
+    // HTML 문서 로딩 완료(DOM 객체 생성 완료) 후에 발생하는 이벤트
+    // -> 이미지, css 로딩이 중요하지 않음 (나중에 추가된 효율적인 방식)
+    // document 앞에 window 생략 가능
+    document.addEventListener('DOMContentLoaded', function(){
+
+      // 첫 번째 버튼 찾기
+      const btn1 = document.querySelector('div > button'); // 만약 버튼 6개가 있으면 6개 전부 찾고 그 중에 첫 번째가 뜨는 것
+      const btn2 = btn1.nextElementSibling;
+      const btn3 = btn2.nextElementSibling;
+
+      // 이벤트 등록 방법 1: elem.on<event> 속성에 이벤트 핸들러 추가
+      // 요소 노드. on으로 시작하는 이벤트 핸들러 추가
+      btn1.onclick = function(){
+        const movies = document.querySelector('#movies'); //getElementByID는 성능면에서 조금 더 낫지만, 차이가 미비해서 잘 사용하지 않음(주로 예전 코드에 사용)
+        // 임한길: 자식 li 찾고 그 중에 두 번째 요소
+        const secondLi = movies.getElementsByTagName('li')[1];
+
+        // 송채은: 첫 번째 영화 찾은 다음에 nextSibling
+        // const firstLi = movies.firstElementChild;
+        // const secondLi = firstLi.nextElementSibling;
+
+
+        console.log(secondLi?.firstChild.nodeValue);
+        // textContent: 요소 노드의 내부 텍스트 노드의 문자열 값을 가지고 있는 속성
+        console.log(secondLi?.textContent);
+      };
+
+      // 이벤트 등록 방법 3: addEventListener()
+      btn3.addEventListener('click', function(){
+        const targetList = document.querySelectorAll('.list'); // 유사배열객체인데 All을 안 쓰면 전체를 다 안보여주고 1개의 객체만 보여줌
+        for(let i = 0; i < targetList.length; i++){
+          // i = 0 <li>두부</li>, i=1 <li>어벤져스</li>
+          const firstLi = targetList[i].firstElementChild;
+          // 해당노드를 삭제한다.
+          // 삭제 방법 1: remove()
+          // if(firstLi) firstLi.remove();
+          // firstLi?.remove(); // 옵셔널 체이닝 바로 위 if문과 같은 말
+
+          // 삭제 방법 2:removeChild()
+          // targetList[i].removeChild(firstLi);
+
+          // 삭제 방법 3: 나를 기준으로 나의 부모 요소를 참조하여 첫 번째 요소 삭제
+          // 비권장, 예전에는 이것 밖에 지원을 안했음 지금은 그냥 위에 remove()쓰면된다.
+          firstLi?.parentNode.removeChild(firstLi); // 부모.removeChild
+        }
+      })
+    });
+
+
+    //마지막에 우유 추가
+    function addMilk(){
+      console.log('우유 추가 예정');
+
+      // text를 추가하는 걸 왜 하나요? -> 그렇지 않으면 사용자가 눌렀을 때, 원하는 결과가 나오지 않을 뿐더러 일일이 HTML로 입력해야 하는 번거로움이 있기 때문임 (동적 반응 구현)
+      const shoppingList = document.getElementById('purchases'); // <ul id="purchases" class="list"> 독립적인 객체로 ul을 꺼냄. 항상 자식을 데리고 다니면서 보여주는게 아니기 때문에 ul인 부모 요소만 꺼낸 상황
+
+      // 솔루션 1: createElement, appendChild 사용 (요소를 생성해서 newLi에 할당해라/ 요소를 생성해서 newTxt에 할당해라)
+      const newLi = document.createElement('li'); // <li>
+      const newTxt = document.createTextNode('우유'); // 우유
+      
+      console.log(newLi.childNodes, newLi.firstChild, newLi.lastChild);
+      newLi.appendChild(newTxt); // <li>가 자식인 '우유'를 입양함
+
+      console.log(newLi.childNodes, newLi.firstChild, newLi.lastChild);
+      // shoppingList.appendChild(newLi); // 맨 끝에 추가 (ppt에서 purchases랑 같음 p.17)
+      // appendchild는 부모 요소를 기준으로 자식을 맨 끝에 추가해라!라는 의미임
+
+      shoppingList.insertBefore(newLi, shoppingList.firstChild); // 맨 앞에 추가
+
+      // 솔루션 2: innerHTML과 outerHTML
+      // innerHTML: 요소노드의 내부 HTML 코드값을 문자열로 가지고 있는 속성(자신 제외)
+      // shoppingList 요소 안의 자식 요소들만 문자열만 확인 가능! (<ul> 안에 들어 있는 <li> 목록만 출력.)
+      console.log("innerHTML", shoppingList.innerHTML);
+      
+      //  shoppingList 자기 자신(<ul> 태그 포함)을 통째로 문자열로 확인 가능! (<ul> 태그부터 내부 <li>까지 전체를 출력.)
+      // outerHTML: 요소노드의 내부 HTML 코드값을 문자열로 가지고 있는 속성(자신 포함)
+      console.log("outerHTML", shoppingList.outerHTML);
+
+      // innerHTML안에 html 문자열에 <li>우유</li>를 덧붙여 특정 버튼을 클릭하면 그 마크업 구조를 나오게 만들기(innerHTML에 덮어쓰기)
+      // const newShoppingList = shoppingList.innerHTML + '<li>우유</li>';
+      // shoppingList.innerHTML = newShoppingList;
+      shoppingList.innerHTML += '<li>우유</li>'; // 바로 위 코드와 서로 같음 (innerHTML과 같은 결과를 보여줌)
+    
+    }
+  </script>
+
+</head>
+<body>
+  <h1>쇼핑 목록</h1>
+  
+  <div>
+    <button>두 번째 영화 찾기</button>
+    <!-- 이벤트 등록 방법 2: HTML 요소의 on<event> 속성의 값으로 이벤트 발생시 실행할 코드를 등록 -->
+    <button onclick="addMilk();console.log('우유 추가 완료');">우유 추가</button>
+    <button>첫 번째 항목 삭제</button>
+  </div>
+
+  <p>마트에서 사야할 목록</p>
+  <ul id="purchases" class="list">
+    <li>두부</li>
+    <li>계란</li>
+    <li>라면</li>
+  </ul>
+
+  <p>보고싶은 영화 목록</p>
+  <ul id="movies" class="list">
+    <li>어벤져스</li>
+    <li>다크나이트</li>
+    <li>미션임파서블</li>
+  </ul>
+
+</body>
+</html>
