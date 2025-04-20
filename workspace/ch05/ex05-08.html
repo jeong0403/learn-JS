@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM</title>
+    <style>
+      /* CSS 클래스 정의 */
+      .pad100 {
+        padding: 100px;
+      }
+      .size30 {
+        font-size: 30px;
+      }
+      .line-through {
+        text-decoration: line-through; /* 취소선 스타일 */
+      }
+      ul {
+        margin: 10px;
+        border: 1px solid blue;
+      }
+      li{
+        border: 1px solid green;
+      }
+    </style>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const list = document.querySelector("ul");
+        console.log(list.className); // hello
+        console.log(list.classList);
+
+        list.className = "good bye";
+
+        const btn = document.querySelector("button");
+        btn.addEventListener("click", function () {
+          console.log(list.style.fontSize); // style 객체는 인라인 스타일만 접근 가능(CSS 파일이나 <style> 태그의 스타일은 접근 안 됨)
+
+          // 읽기 전용
+          const computedStyle = getComputedStyle(list);
+          console.log(computedStyle.fontSize);
+
+          list.className = "pad100 size30";
+          console.log(computedStyle.fontSize);
+        });
+
+        // ul > li에 취소선 추가
+        // for (let item of list.children) { 
+        //   item.addEventListener("click", function (event) {
+        //     console.log("event.target", event.target); // 실제 이벤트가 발생한 요소
+        //     // if (event.target.classList.contains("line-through")) {
+        //     //   // 지정한 class를 가지고 있는지 여부 반환
+        //     //   event.target.classList.remove("line-through"); // line-through class 삭제
+        //     // } else {
+        //     //   event.target.classList.add("line-through"); // line-through class 추가
+        //     // }
+        //     event.target.classList.toggle("line-through"); // 취소선이 있으면 제거하고 없으면 추가
+        //   });
+        // }
+
+        // 이벤트 위임
+        // 부모에 이벤트를 등록한다.
+        list.addEventListener('click', function(event){
+          console.log(event.target); // 실제 이벤트가 발생한 요소
+          console.log(event.currentTarget); // list
+          
+          // if(event.target.nodeName === 'LI'){ // nodeName 속성은 전부 대문자로 들어옴
+          if(event.target.tagName === 'LI'){ 
+            event.target.classList.toggle('line-through');
+          }
+        });
+
+      });
+    </script>
+  </head>
+  <body>
+    <h1>DOM - class 속성 접근</h1>
+    <button>class 추가</button>
+    <ul class="hello bye">
+      <li>두부</li>
+      <li>계란</li>
+      <li>콩나물</li>
+    </ul>
+  </body>
+</html>

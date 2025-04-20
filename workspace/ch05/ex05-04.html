@@ -1,43 +1,54 @@
 <!DOCTYPE html>
 <html lang="ko-KR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>쇼핑목록</title>
-</head>
-<body>
-  <h1>이벤트 처리</h1>
-  <div>
-    <!-- 이벤트 등록 방법 2: HTML 요소의 on<event> 속성의 값으로 이벤트 발생시 실행할 코드를 등록 -->
-    <button onclick = "console.log('눌렀지');">눌러봐</button>
-    <!-- 
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>쇼핑목록</title>
+  </head>
+  <body>
+    <h1>이벤트 처리</h1>
+    <div>
+      <!-- 이벤트 등록 방법 2: HTML 요소의 on<event> 속성의 값으로 이벤트 발생시 실행할 코드를 등록 -->
+      <button onclick="console.log('눌렀지');">눌러봐</button>
+      <!-- 
     onclick 속성으로 껍데기를 만들면 아래 코드가 이벤트 핸들러에 의해 생성된다.
     btn.onclick = function(){
       console.log('눌렀지');
     } -->
-  </div>
+    </div>
 
-  <script>
-    const btn = document.querySelector('button');
-    // 이벤트 등록 방법 1: elem.on<event> 속성에 이벤트 핸들러 추가
-    // 앞서 만들어진 값을 아래에서 덮어 쓴 상황이라 '눌렀음'만 출력됨
-    // 아래 DOM Level 0..2..이런 숫자들은 자바스크립트 초기 버전부터 업데이트 된 버전을 의미
-    // DOM Level 0 방식 (비표준 방식)
-    btn.onclick = function(){
-      console.log('눌렀음');
-    };
-    btn.onclick = function(){
-      console.log('눌렀네');
-    };
+    <script>
+      const btn = document.querySelector("button");
+      // 이벤트 등록 방법 1: elem.on<event> 속성에 이벤트 핸들러 추가
+      // 앞서 만들어진 값을 아래에서 덮어 쓴 상황이라 '눌렀음'만 출력됨
+      // 아래 DOM Level 0..2..이런 숫자들은 자바스크립트 초기 버전부터 업데이트 된 버전을 의미
+      // DOM Level 0 방식 (비표준 방식)
+      btn.onclick = function () {
+        console.log("눌렀음-1");
+      };
+      btn.onclick = function () {
+        console.log("눌렀네-2");
+      };
 
-    // 이벤트 등록 방법 3: addEventListener() 이벤트가 추가 됨! 덮어쓰는게 아님
-    // DOM Level 2 방식 (표준 방식)
-    btn.addEventListener('click', function(){
-      console.log('누름');
-    });
-    btn.addEventListener('click', function(){
-      console.log('눌렀소');
-    });
-  </script>
-</body>
+      // 이벤트 등록 방법 3: addEventListener() 이벤트가 추가 됨! 덮어쓰는게 아님
+      // DOM Level 2 방식 (표준 방식)
+      btn.addEventListener("click", function () {
+        console.log("누름-3");
+      });
+
+      // handleClick -> 함수명이라 변경 가능
+      // const result = handleClick(); 
+      // btn.addEventListener("click", result); // 이게 실행하기 전에 눌렀소-4가 나왔다는건가? 아님 누르니까 호출 되고 나온건가? 뭔말임?
+      // btn.addEventListener("click", handleClick()); // 오류(위 작성한 코드 2줄과 동일)
+      btn.addEventListener("click", handleClick()); // 괄호가 없으면 함수 자체를 넘겨준다는 의미가 된다!
+
+      setTimeout(function () {
+        btn.removeEventListener('click', handleClick); // 괄호가 없으면 함수 자체를 넘겨준다는 의미가 된다!
+      }, 1000 * 10); // 1000ms = 1s (프로그램에서 시간은 ms단위)
+    
+      function handleClick(){
+        console.log('눌렀소-4');
+      }
+    </script>
+  </body>
 </html>

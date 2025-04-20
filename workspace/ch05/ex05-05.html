@@ -15,26 +15,28 @@
           <ul>
             <li>
               <h2>쇼핑 목록</h2>
+              <!-- 새로운 할일 입력 폼 -->
               <div class="todoinput">
-                <input type="text" autofocus />
-                <button type="button">추가</button>
+                <input type="text" autofocus onkeyup="handleKeyup(event)" />
+                <button type="button" onclick="handleAdd()">추가</button>
               </div>
+              <!-- 할일 목록이 표시되는 영역 -->
               <ul class="todolist">
-                <li>
+                <!-- <li data-no="1"> // html은 얘를 읽지 못함
                   <span>1</span>
                   <span><s>샘플1</s></span>
                   <button type="button">삭제</button>
                 </li>
-                <li>
+                <li data-no="2">
                   <span>2</span>
                   <span>샘플2</span>
                   <button type="button">삭제</button>
                 </li>
-                <li>
+                <li data-no="3">
                   <span>3</span>
                   <span>샘플3</span>
                   <button type="button">삭제</button>
-                </li>
+                </li> -->
               </ul>
             </li>
           </ul>
@@ -55,32 +57,217 @@
        * @returns {HTMLElement} 생성된 <li> DOM 요소
        */
       function getTodoItemElem(item) {
-        // { no: 3, title: '라면', done: true } Todo 객체
+        // item -> { no: 3, title: '라면', done: true } Todo 객체
+        // 자바스크립트 객체 (위 item) 받아서 todo 객체를 반환할거야
         /* 반환할 DOM 객체
-      <li>
-                <span>3</span>
-                <span>샘플3</span>
-                <button type="button">삭제</button>
-              </li>
+        return  <li>
+          <span>3</span>
+          <span>샘플3</span>
+          <button type="button">삭제</button>
+        </li>
+        */
+        // <li>
+        const liElem = document.createElement("li");
+        // <span>
+        const noElem = document.createElement("span");
+        // <span>
+        const titleElem = document.createElement("span");
+        // <button>
+        const deleteElem = document.createElement("button");
+
+        //📌 텍스트 생성
+        // 3
+        const noTxt = document.createTextNode(item.no);
+        // 샘플 3
+        const titleTxt = document.createTextNode(item.title);
+        // 삭제
+        const deleteTxt = document.createTextNode("삭제");
+
+        // 조립
+        // <span>3</span>
+        noElem.appendChild(noTxt);
+        // <span>샘플3</span>
+        titleElem.appendChild(titleTxt);
+        // <button type="button">삭제</button>
+        deleteElem.setAttribute("type", "button"); // type으로 button 값을 추가해라!
+        titleElem.setAttribute("tabindex", 0); // 완료/미완료 처리를 위한 탭 포커싱 (포커서블 객체 - 접근성) 뒤에 '0'으로 따옴표 붙여도 됨
+        deleteElem.appendChild(deleteTxt);
+
+        // li의 자식으로 조립
+        // <li><span>3</span></li>
+        liElem.appendChild(noElem);
+        // <li><span>3</span><span tabindex = "0">샘플3</span></li>
+        liElem.appendChild(titleElem);
+        // <li><span>3</span><span tabindex = "0">샘플3</span><button type="button">삭제</button></li>
+        liElem.appendChild(deleteElem);
+
+        // custom 속성
+        // 존재하지 않는 비표준 형태의 속성을 부여해도 꺼낼 수는 있음. data-* 붙여주면 됨
+        // <li data-no = "3"> // 소떡케이스 data - no 사이에 끼운다
+        // elem.dataset.no -> 3 // data-*를 찾아서 dataset 안에 자동으로 가져옴 (data-로 시작하는 사용자 정의 속성을 담은 전용 관리 객체)
+        liElem.dataset.no = item.no; // dataset만 쓰면 '속성들의 묶음'일 뿐. 그래서 .no를 붙여서 data 객체 내의 no를 가져와라고 할 수 있음.
+        // li 요소에 data-no 속성을 달고, 그 값은 item 안에 있는 no 값을 써
+        // liElem.setAttribute("data-no", item.no);
+        liElem.dataset.done = item.done;
+
+        // "삭제" 버튼에 클릭 이벤트 핸들러 추가
+        // 이벤트방법(1) : DOM Level2
+        deleteElem.addEventListener("click", function (event) {
+          // event가 발생했을 때 호출하는 함수
+          // no를 찾아서~~~ 첫 번째 방법
+          const btn = event.target; // 클릭 이벤트가 발생한 요소 (<button>)
+          // btn의 조상 중 셀렉터와 일치하는 가장 가까운 조상을 찾을 때 쓰는 것 ⇒ closest
+          const liNode = btn.closest("li"); // <li data-no = '3'>
+          deleteItem(liNode.dataset.no); // li 요소의 data-no 속성값을 가져옴
+        });
+
+        // 이벤트방법(2) : DOM Level0
+        // 삭제 이벤트 등록
+        deleteElem.setAttribute("onclick", `deleteItem(${item.no})`); // deleteItem 함수 => 이거 호출
+        // 호출하는 형태: deleteItem(${item.no});
+
+        // 완료/미완료 처리 (이벤트 방법 1로 처리)
+        titleElem.addEventListener("click", function (event) {
+          // event가 발생했을 때 호출하는 함수
+          // no를 찾아서~~~ 첫 번째 방법
+          const btn = event.target; // 클릭 이벤트가 발생한 요소 (<button>)
+          // btn의 조상 중 셀렉터와 일치하는 가장 가까운 조상을 찾을 때 쓰는 것 ⇒ closest
+          const liNode = btn.closest("li"); // <li data-no = '3'>
+          toggleDone(liNode.dataset.no); // // li 요소의 data-no 속성값을 가져옴
+        });
+
+        // 완료/미완료 처리 (이벤트 방법 2로 처리)
+        // titleElem.setAttribute("onclick", `toggleDone(${item.no})`); // toggleDone 함수 => 이거 호출
+
+        // 아래 내용을 innerHTML에 넣어도 됨 --> 하지만 지금 연습하는 단계라 가장 기본적인 방법으로 진행함
+        // <li>
+        // <span>3</span>
+        // <span>샘플3</span>
+        // <button type="button">삭제</button>
+        // </li>
+        return liElem;
+      }
+
+      /*
+      ⇒함수 호출 순서
+      1. 추가 버튼을 누르면 handleAdd() 실행
+      2. handleAdd()가 addItem() 호출
+      3. addItem()이 getTodoItemElem() 호출
+      4. getTodoItemElem()에서 return liElem 했으므로 다시 addItem() 호출
+      5. 모두 호출 후에 console.log에 출력이 되면서 li에 추가 된다!
+      6. 이후 함수가 끝나면 쌓여있던 Call Stack의 데이터가 모두 사라진다.
       */
 
-        /**
-         * 새로운 할 일을 추가합니다.
-         * @param {string} title - 추가할 할 일의 제목
-         */
-        function addItem(title) {}
+      /**
+       * 추가 버튼 클릭 시 실행되는 이벤트 핸들러
+       * 입력창의 값을 가져와 새로운 Todo 아이템을 추가
+       */
+      function handleAdd() {
+        const inputElem = document.querySelector(".todoinput > input");
+        if (inputElem.value.trim() !== "") {
+          // 빈 문자일때 추가 안되도록 막음
+          addItem(inputElem.value.trim()); //<input>, <select> 같은 폼의 입력 요소에는 value속성으로 사용자가 입력한 선택한 값이 저장되어 있음
+          inputElem.value = "";
+          inputElem.focus(); // 추가버튼을 누르고 나면 원래 커서가 버튼에 가있는데 다시 인풋으로 옮겨라.
+        }
+      }
 
-        /**
-         * 특정 할 일의 완료 상태를 토글합니다. (완료 ↔ 미완료)
-         * @param {number} no - 토글할 할 일의 고유 번호
-         */
-        function toggleDone(no) {}
+      /**
+       * 입력창에서 키보드 입력 시 실행되는 이벤트 핸들러
+       * Enter 키 입력 시 추가 기능 실행
+       * @param {KeyboardEvent} event - 키보드 이벤트 객체
+       */
+      function handleKeyup(event) {
+        // 키보드 이벤트 정보를 가지고 있는 Event 객체
+        if (event.key === "Enter") {
+          handleAdd();
+        }
+      }
 
-        /**
-         * 특정 할 일을 삭제합니다.
-         * @param {number} no - 삭제할 할 일의 고유 번호
-         */
-        function deleteItem(no) {}
+      // let itemNo = 3;
+
+      /**
+       * 새로운 Todo 아이템을 목록에 추가하는 함수
+       * @param {string} title - 추가할 할 일의 제목
+       */
+      function addItem(title) {
+        const todoList = document.querySelector(".todolist");
+
+        const item = {
+          // childeren: 요소노드인 자식노드의 목록(요소노드만) <-> child는 텍스트 노드, 주석 노드, 공백..등 까지도 포함
+          no: todoList.children.length + 1,
+          // no: document.querySelectorAll('.todolist > li').length + 1,
+          // no: ++itemNo,
+          // title: title, // 속성값을 담는 변수가 속성명과 일치할 경우 속성값 생략 가능
+          title,
+          done: false, // 미완료 상태
+        };
+        const todoLi = getTodoItemElem(item); // 왼쪽은 변수 = 오른쪽은 함수 호출 -> 위로 올라가서 item을 찾아
+        console.log(todoLi);
+
+        todoList.appendChild(todoLi);
+      }
+
+      /**
+       * 만약에 수동으로 하면 html에서 취소선을 추가 해줘야 함.
+       * Todo 아이템의 완료/미완료 상태를 토글하는 함수 (완료 ↔ 미완료)
+       * @param {number} no - 토글할 할 일의 고유 번호
+       */
+      // 수업 시간 코드
+      function toggleDone(no) {
+        /*
+        <li data0no = "3" data-done = "true">
+        <span>3</span>
+        <span>샘플3</span> // 이게 지금 span:last-of-type
+        <button type="button">삭제</button>
+        </li>
+        */
+        const targetLi = document.querySelector(`.todolist > li[data-no="${no}"]`);
+        const done = targetLi.dataset.done === 'true';
+        console.log(typeof done, done); // 현재 false라서 콘솔에 string false라고 찍힘
+        const titleEl = targetLi.querySelector('span:last-of-type'); // <span>샘플3</span> li 요소 노드 안에서 마지막 span 찾을게
+        if (done) { // done이 true라면 <span><s>샘플3</s></span> -> <span>샘플3</span> 미완료로 수정
+          titleEl.appendChild(titleEl.firstChild.firstChild);
+          titleEl.firstChild.remove();
+        } else { // done이 flase라면 <span>샘플3</span> 미완료 상태 -> <span><s>샘플3</s></span> 완료로 수정
+          const sElem = document.createElement('s'); // <s>  
+          sElem.appendChild(titleEl.firstChild); // <s>샘플3</s> titleEl의 첫 번째 자식으로 <s> 추가
+          titleEl.appendChild(sElem); // <span><s>샘플3</s></span>
+        }
+        targetLi.dataset.done = !done; // 완료 여부를 토글 (li 요소의 data-done 속성값을 반전시킴 t<->f)
+      }
+
+      // 직접 작성한 코드 - 토글
+      // function toggleDone(no) {
+      //   // todolist의 하위의 data-no 속성과 일치하는 li 요소 찾기
+      //   const targetLi = document.querySelector(
+      //     `.todolist > li[data-no="${no}"]`
+      //   );
+      //   // 위에서 찾은 li의 두 번째 span 선택
+      //   const titleSpan = targetLi.querySelectorAll("span")[1];
+      //   // <span> 안에 <s> 태그 확인 -> 취소선 판단
+      //   // titleSpan에 <s> 있으면 요소 가져오고, 없으면 null 반환
+      //   const strikeIn = titleSpan.querySelector("s");
+
+      //   if (strikeIn) {
+      //     // 만약 취소선이 있으면 <span> 안에 <s> 있음
+      //     titleSpan.textContent = strikeIn.textContent; // <s>내용</s> 텍스트 추출 후 <span>내용</span>으로 바꾼다 = <s> 제거
+      //   } else {
+      //     // 취소선 없으면 <s>로 감싸기
+      //     titleSpan.innerHTML = `<s>${titleSpan.textContent}</s>`;
+      //   }
+      // }
+
+      /**
+       * Todo 아이템을 삭제하는 함수
+       * @param {number} no - 삭제할 할 일의 고유 번호
+       */
+      function deleteItem(no) {
+        //(no)는 함수 안에서 no라는 변수를 호출할거야! 라는 의미임
+        const targetLi = document.querySelector(
+          `.todolist > li[data-no="${no}"]`
+        );
+        targetLi.remove();
       }
     </script>
   </body>

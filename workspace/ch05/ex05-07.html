@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM</title>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const smile = document.querySelector("span");
+        console.log(smile.style);
+        console.log(smile.style.left, smile.style.top); // css 스타일 값 꺼내기
+
+        // 지정한 함수를 지정한 시간이 흐른 뒤에 실행
+        setTimeout(function () {
+          smile.style.left = '165px';
+          smile.style.top = '30px';
+          smile.style.fontSize = '24px';
+        }, 1000);
+
+        document.addEventListener('mousemove', function(event){
+          const x = event.clientX - smile.clientWidth - 3; // 연산하면 위치 값 조정 가능
+          const y = event.clientY - smile.clientHeight - 3; // style뿐만이 아니라 class로 지정한 것도 모두 반영 됨. 브라우저가 랜더링한 실물 크기의 정보를 가지고 있음. 읽기 전용임(내가 정하는 값이 아님)
+          // const x = event.clientX - smile.clientHeight / 2; // 마우스 커서 x축 위치 정보 - 커서 높이 값/2
+          // const y = event.clientY - smile.clientWidth / 2; // 마우스 커서 y축 위치 정보 - 커서 가로 값/2
+          // 마우스 좌표 따라 위치 변경
+          // smile.style.left = x + 'px'; // html에 inline으로 작성한 style을 읽을 때 .style 써야 함
+          // smile.style.top = y + 'px';
+          // smile.style.fontSize = x / 5 + 'px';
+          
+          // smile.style = `left: ${x}px; top: ${y}px; font-size: ${x / 5}px`; // style을 문자열로 한번에 지정하는 건 불가함
+          // smile.style.cssText = `left: ${x}px; top: ${y}px; font-size: ${x / 5}px`; // cssText 이용 -> 문자열로 스타일 한번에 지정 가능함 (setAttribute 쓰는 것과 같음)
+          smile.setAttribute('style', `left: ${x}px; top: ${y}px; font-size: ${x / 5}px`);
+        })
+      });
+    </script>
+  </head>
+  <body>
+    <h1>DOM - style 속성 접근</h1>
+    <span style="position: fixed; left: 26px; top: 25px; font-size: 26px">😆</span>
+  </body>
+</html>
