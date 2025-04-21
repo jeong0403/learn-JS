@@ -27,12 +27,81 @@
 공이 들어있지 않은 바구니는 0을 출력한다.
 
 예제 입력 1 
-5 4
-1 2 3
-3 4 4
-1 4 1
-2 2 2
+5 4 // 바구니 n개, 앞으로 넣을 횟수 m번 (= 둘째 줄부터는 m개의 줄에 걸쳐 공을 넣음)
+1 2 3 // 1번 바구니부터 2번 바구니까지 3번 공 넣음 => 3 3 0 0 0
+3 4 4 // 3번 바구니부터 4번 바구니까지 4번 공 넣음 => 3 3 4 4 0
+1 4 1 // 1번 바구니부터 4번 바구니까지 1번 공 넣음 => 1 1 1 1 0
+2 2 2 // 2번 바구니부터 2번 바구니까지 2번 공 넣음 => 1 2 1 1 0
 예제 출력 1 
 1 2 1 1 0
+
+예제 입력 2 (추가)
+4 3 // 바구니 4개, 앞으로 넣을 횟수 3번
+1 2 2 // 2 2 0 0
+2 3 4 // 2 4 4 0
+2 2 1 // 2 1 4 0
+예제 출력 2
+2 1 4 0
 */
 
+
+function main() {
+  const data = getData();
+  // console.log(data); // [ [ 5, 4 ], [ 1, 2, 3 ], [ 3, 4, 4 ], [ 1, 4, 1 ], [ 2, 2, 2 ] ]
+  // 첫 번째 줄에서 바구니의 개수(n)를 가져옴
+  const n = data[0][0];
+
+  //n개의 바구니를 0으로 초기화한 배열 생성
+  // const result = new Array(n).fill(0); // 배열 메서드 중 하나인 fill
+  // const result = new Array(n).fill(0); // node로 확인함. n = 5 fill(0)이라면? [0, 0, 0, 0, 0]
+  
+  // 빈 값에 0을 채우는 fill 함수 없이 for문 사용하는 방법!
+  // result는 데이터를 참조함
+  // 참조형 데이터 타입은 주소 자체를 (객체 내부 속성) 바꾸는 건 상관 없음
+  // 그렇기 때문에 let이 아닌 const를 써도 상관 없음 
+  const result = [];
+  for (let i = 0; i < n; i++) {
+    result.push(0);
+  }
+
+  // 각 공 넣기 명령을 순회
+  for (let i = 1; i < data.length; i++) {
+    const rowArr = data[i]; // i = 1 [1, 2, 3], i = 2 [3, 4, 4] ...
+    // x번 바구니부터 y 바구니까지 z번호의 공으로 채움
+    const x = rowArr[0]; // 시작 바구니 번호
+    const y = rowArr[1]; // 종료 바구니 번호
+    const z = rowArr[2]; // 공 번호
+
+    for (let k = x; k <= y; k++) { // k가 2일때 k < y가 되면 값 충족이 안 됨. 따라서 이하로 바꿔야 함
+      // k-1을 하는 이유: 배열은 0부터 시작하지만 바구니는 1부터 시작하므로 인덱스 조정
+      result[k - 1] = z;
+    }
+  }
+
+  // console.log(result.join(' ')); // [1, 2, 1, 1, 0] => join 쓰면 '1 2 1 1 0'으로 바꿔줌
+  // const strResult = result.join (' ');
+  // console.log(strResult);
+  const strResult = '';
+  for(let i = 0; i <result.length; i++) {
+    strResult += result[i] + ' ';
+  }
+
+  // 문자열을 다시 배열로 변환 (참고용 코드)
+  // '1 2 1 1 0' => [1, 2, 1, 1, 0]
+  const reArray = strResult.split(' '); // 특정 문자열을 기준으로 배열로 자르는게 split임
+  console.log(reArray);
+}
+main();
+
+function getData() {
+  const arr = require("fs").readFileSync(0).toString().trim().split("\n");
+  const result = [];
+  for (let row of arr) {
+    const rowArr = row.split(' '); // 여러 개의 배열 중에 일부만 꺼내고 싶어 => splice 씀
+    for (let k = 0; k < rowArr.length; k++){
+      rowArr[k] = isNaN(rowArr[k]) ? rowArr[k] : parseInt(rowArr[k]);
+    }
+    result.push(rowArr.length === 1 ? rowArr[0] : rowArr);
+  }
+  return result.length === 1 ? result[0] : result;
+}

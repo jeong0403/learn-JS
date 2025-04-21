@@ -136,3 +136,44 @@ No
 No
 */
 
+// const fs = require("fs");
+// const fileData = fs.readFileSync(0).toString().trim().split("\n");
+
+// let totalPrice = parseInt(fileData[0])  // 총합
+// let T = parseInt(fileData[1]); // 라인 개수
+
+// for(let i = 1; i < T + 2; i++){
+//   const data = fileData[i].split(' '); // i 번째 줄에서 스페이스로 나누고
+//   const a = parseInt(data[0]); // i줄에서 나눈 값이 a
+//   const b = parseInt(data[1]); // i줄에서 두 번째로 나눈 값이 b
+//   console.log(a + b); // a와 b를 더한다
+// }
+
+function main() {
+  const data = getData();
+  // console.log(data);
+  const totalPrice = data[0][0];
+  let sum = 0;
+  for (let i = 2; i < data.length; i++) {
+    const rowData = data[i];
+    sum += rowData[0] * rowData[1];
+  }
+
+  console.log(totalPrice === sum ? 'Yes' : 'No');
+}
+main();
+
+function getData() {
+  const fs = require("fs");
+  const fileData = fs.readFileSync(0).toString();
+  const arr = fileData.trim().split("\n");
+  const result = [];
+  for (let row of arr) {
+    const rowArr = row.split(' ');
+    for (let k = 0; k < rowArr.length; k++){
+      rowArr[k] = isNaN(rowArr[k]) ? rowArr[k] : parseInt(rowArr[k]);
+    }
+    result.push(rowArr);
+  }
+  return result;
+}

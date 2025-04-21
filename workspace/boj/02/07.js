@@ -38,13 +38,7 @@
 600
 */
 
-// const fs = require("fs");
-// const input = fs.readFileSync(0).toString().trim().split(" ");
-
-// const a = parseInt(input[0]);
-// const b = parseInt(input[1]);
-// const c = parseInt(input[2]);
-
+/* 기존 코드
 const fs = require("fs");
 const input = fs.readFileSync(0).toString().trim().split(" ");
 
@@ -61,4 +55,61 @@ if (a === b && b === c) {
 } else {
   console.log(Math.max(a, b, c) * 100);
 }
+*/
 
+// 바꾼 코드
+function main(){
+  const data = getData();
+  // data에서 값을 꺼내서 문제 해결하는 코드 작성
+  //  console.log(data); // [ [ 6, 2, 5 ] ]
+  const n1 = data[0][0];
+  const n2 = data[0][1];
+  const n3 = data[0][2];
+
+  let point = 0;
+  // if (n1 === n2 === n3) {} // 이렇게 적으면 n1 === n2는 true가 나와서 true === n3를 묻는 꼴
+  if (n1 === n2 && n2 === n3) {
+    point = 10000 + n1 * 1000;
+  } else if (n1 === n2 || n2 === n3) {
+    point = 1000 + n2 * 100;
+  } else if (n1 === n3) {
+    point = 1000 + n1 * 100;
+  } else {
+    point = Math.max(n1, n2, n3) * 100;
+  }
+
+  console.log(point);
+}
+main();
+
+/**
+ * 표준 입력장치(콘솔)에서 여러 줄로 입력된 줄당 여러 건의 데이터를 읽어서 숫자로 변환한 후
+ * 배열로 저장하여 반환한다.
+ * @returns {[]} 2차원 배열
+ */
+function getData() {
+  const fs = require("fs");
+  // '23 48\n25\n'와 같은 모양을 쪼갠다
+  const fileData = fs.readFileSync(0).toString();
+  // ['23 48', '25']
+  const arr = fileData.trim().split("\n"); // 줄 단위로 먼저 자른다.
+  const result = []; // 리턴할 2차원 배열
+  // for (let i = 0; i < arr.length; i++) {
+  //   const row = arr[i]; // '23 48', '25' for문 2번 도는 상황이고 length = 2임
+  //   const rowArr = row.split(' '); // ['23', 48'], ['25']
+  //   for (let k = 0; k < rowArr.length; k++){
+  //     rowArr[k] = isNaN(rowArr[k]) ? rowArr[k] : parseInt(rowArr[k]);
+  //   }
+  //   result.push(rowArr);
+  // }
+
+  for (let row of arr) { // '23 48', '25'
+    const rowArr = row.split(' '); // ['23', 48'], ['25']
+      for (let k = 0; k < rowArr.length; k++){
+      rowArr[k] = isNaN(rowArr[k]) ? rowArr[k] : parseInt(rowArr[k]);
+    }
+    result.push(rowArr);
+  }
+
+  return result;
+}

@@ -51,3 +51,36 @@ Python을 사용하고 있다면, input 대신 sys.stdin.readline을 사용할 �
 2000
 */
 
+// 문제의 핵심 : 표준 입력 장치(콘솔)에서 출력할 때 console.log를 호출하는 횟수를 줄일 것
+
+const fs = require("fs");
+const fileData = fs.readFileSync(0).toString().trim().split("\n");
+
+let T = parseInt(fileData[0]); // 라인개수
+
+let result = '';
+for (let i = 1; i <= T; i++) {
+  const data = fileData[i].split(" "); 
+  const A = parseInt(data[0]); 
+  const B = parseInt(data[1]);
+  result += (A + B) + '\n';
+}
+console.log(result.trim()); // console.log 출력 횟수를 줄이기 위해 result 변수에 담는 방법으로 위에서 변경
+
+/* 출력에 걸리는 시간
+console.time('Multiple logs'); // 시간 측정 시작
+
+for (let i = 0; i < 100000; i++) {
+  console.log('Line-' + i++);
+}
+
+console.timeEnd('Multiple logs'); // 시간 측정 종료
+
+console.time('Single logs'); // 시간 측정 시작
+let result = '';
+for (let i = 0; i < 1000000; i++) {
+  result += ('Line-' + i++);
+}
+console.log(result);
+console.timeEnd('Single logs'); // 시간 측정 종료
+*/

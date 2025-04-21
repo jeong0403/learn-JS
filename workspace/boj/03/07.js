@@ -29,3 +29,28 @@ Case #4: 17
 Case #5: 7
 */
 
+function main() {
+  const data = getData();
+  // console.log(data); // [ [ 5 ], [ 1, 1 ], [ 2, 3 ], [ 3, 4 ], [ 9, 8 ], [ 5, 2 ] ]
+  // index[0]은 필요 없으니, [1]부터 돌자!
+
+  for (let i = 1; i < data.length; i++) {
+    console.log(`Case #${i}: ${data[i][0] + data[i][1]}`);
+  }
+}
+main();
+
+function getData() {
+  const fs = require("fs");
+  const fileData = fs.readFileSync(0).toString();
+  const arr = fileData.trim().split("\n");
+  const result = [];
+  for (let row of arr) {
+    const rowArr = row.split(' ');
+    for (let k = 0; k < rowArr.length; k++){
+      rowArr[k] = isNaN(rowArr[k]) ? rowArr[k] : parseInt(rowArr[k]);
+    }
+    result.push(rowArr);
+  }
+  return result;
+}
