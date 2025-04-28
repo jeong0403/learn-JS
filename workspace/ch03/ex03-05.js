@@ -38,19 +38,20 @@ function College(kor, eng) {
   HighSchool.call(this, kor, eng);
 }
 
-inherite(HighSchool, College); // 부모는 HighSchool, 자식은 College
+mylib.inherite(HighSchool, College); // 부모는 HighSchool, 자식은 College
+/*mylib.js에 추가함
+// // College가 HighSchool을 상속 받는다.
+// function inherite(Parent, Child){
+// // const F = new Function();
+// // F.prototype = Parent.prototype;
+// // Child.prototype = new F();
 
-// College가 HighSchool을 상속 받는다.
-function inherite(Parent, Child){
-// const F = new Function();
-// F.prototype = Parent.prototype;
-// Child.prototype = new F();
-
-// 자바스크립트 내장 함수
-// Object.create(): 지정한 prototype 객체를 참조하는 인스턴스를 생성
-Child.prototype = Object.create(Parent.prototype); // Parent의 prototype을 참조하는 인스턴스 생성
-Child.prototype.constructor = Child;
-};
+// // 자바스크립트 내장 함수
+// // Object.create(): 지정한 prototype 객체를 참조하는 인스턴스를 생성
+// Child.prototype = Object.create(Parent.prototype); // Parent의 prototype을 참조하는 인스턴스 생성
+// Child.prototype.constructor = Child;
+// };
+*/
 
 College.prototype.grade = function(){
   let level = 'F';
