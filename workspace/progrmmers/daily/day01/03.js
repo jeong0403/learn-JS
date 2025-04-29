@@ -39,3 +39,14 @@ rl.on('line', function (line) {
   }
   console.log(result);
 });
+
+// 위 문제와 별개임 -> 함수 호출 연습
+// 문자열과 반복할 정수를 전달 받아서 문자열을 반복할 횟수만큼 붙여서 반환한다.
+// getRepeat 함수명, str과 num 전달 받을 매개변수 => 모두 내 마음대로~
+function getRepeat(str, num){
+  let result = '';
+  for(let i = 0; i < num; i++) { // 0, 1, 2, 3, 4
+    result += str; // 'string', 'stringstring', 'stringstringstring', 'stringstringstringstring', 'stringstringstringstringstring'
+  }
+  return result; // 나를 호출한 애에게 최종 결과 값을 return해줄게!
+}

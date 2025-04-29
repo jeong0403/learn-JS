@@ -30,4 +30,18 @@ rl.on('line', function (line) {
     input = [line];
 }).on('close',function(){
     str = input[0];
+    // console.log(str);
+    // console.log(str.length); // 배열 길이 7
+    // console.log(str[0]); // 인덱스 방식으로 글자 하나하나씩 접근 가능 a
+
+    // aBcDeFg
+    let result = '';
+    for(let i = 0; i < str.length; i++){ // i = 0, 1, 2, 3, 4, 5, 6
+      if(str[i].toUpperCase() === str[i]) { // 대문자로 바꾼 글자와 바꾸기 전 글자가 같다는 것? 기존에도 대문자란 소리.
+        result += str[i].toLowerCase(); //  대문자면 소문자로 // Ab, AbCd, AbCdEf
+      } else{ // if문의 true가 아닌 것은 소문자라는 소리
+        result += str[i].toUpperCase(); // 소문자면 대문자로 A, AbC, AbCdE, AbCdEfG
+      }
+    }
+    console.log(result);
 });
