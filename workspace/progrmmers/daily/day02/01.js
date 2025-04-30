@@ -30,5 +30,6 @@ let input = [];
 rl.on('line', function (line) {
     input = line.split(' ');
 }).on('close', function () {
-  console.log(Number(input[0]) + Number(input[1]));
+  const sum = (Number(input[0]) + Number(input[1]));
+  console.log(`${input[0]} + ${input[1]} = ${sum}`);
 });

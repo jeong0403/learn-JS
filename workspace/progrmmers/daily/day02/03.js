@@ -33,4 +33,17 @@ rl.on('line', function (line) {
   input = [line];
 }).on('close',function(){
   str = input[0];
+  printStr(str);
 });
+
+// 전달 받은 문자열을 시계 방향으로 90도 회전한 모양으로 출력한다.
+  function printStr(msg){
+  // hello일 경우
+  // for(let s of msg) { // s=h, s=e, s=l, s=l, s=o
+  //   console.log(s); // console.log가 1줄씩 출력되기 때문에 글자 길이 만큼 for문 돌면서 출력되는 것
+  // }
+
+  for(let i = 0; i < msg.length; i++){ // i = 0, 1, 2, 3, 4
+    console.log(msg[i]); // console.log가 1줄씩 출력되기 때문에 글자 길이 만큼 for문 돌면서 출력되는 것
+  }
+}

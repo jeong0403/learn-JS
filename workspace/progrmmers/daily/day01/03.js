@@ -33,11 +33,10 @@ rl.on('line', function (line) {
   str = input[0];
   n = Number(input[1]);
 
-  let result = '';
-  for(let i = 0; i < n; i++) { // 0, 1, 2, 3, 4
-    result += str; // 'string', 'stringstring', 'stringstringstring', 'stringstringstringstring', 'stringstringstringstringstring'
-  }
+  const result = getRepeat(str, n);
+  
   console.log(result);
+
 });
 
 // 위 문제와 별개임 -> 함수 호출 연습

@@ -22,17 +22,37 @@ url: https://school.programmers.co.kr/learn/courses/30/lessons/181944?language=j
 1 is odd
 */
 
-const readline = require('readline');
+const readline = require("readline");
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout
+  output: process.stdout,
 });
 
 let input = [];
 
-rl.on('line', function (line) {
-  input = line.split(' ');
-}).on('close', function () {
+rl.on("line", function (line) {
+  input = line.split(" ");
+}).on("close", function () {
   n = Number(input[0]);
-  console.log(input);
+  
+  // 여기 even과 아래 함수의 even은 다른 even임
+  const even = isEven(n);
+  if(even === true) {
+    console.log(`${n} is even`);
+  } else {
+    console.log(`${n} is odd`);
+  }
 });
+
+// 지정한 숫자가 짝수인지 여부를 반환
+function isEven(num) {
+  let even;
+
+  if (num % 2 === 0) {// 짝수
+    even = true;
+  } else {
+    even = false;
+  }
+
+  return even;
+}
