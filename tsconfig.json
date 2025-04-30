@@ -111,5 +111,5 @@
     "skipLibCheck": true                                 /* 라이브러리 파일의 타입 검사를 건너뛰어서 시간을 절약합니다 */
   },
   "include": ["workspace/**/*"],
-  "exclude": ["node_modules", "sample/**/*"]
+  "exclude": ["node_modules", "sample/**/*", "**/tempCodeRunnerFile.ts"] // code runner가 만든 임시 파일은 컴파일 제외
 }

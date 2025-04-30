@@ -10,7 +10,19 @@
   };
 
   
-  interface Todo {}
+  interface Todo {
+    id: string | number;
+    title: string;
+    content: string;
+  }
 
-  const todo2 = {};
+  const todo2: Todo = {
+    id: 13,
+    title: '할일 13',
+    content: '내용 13'
+  };
+
+  todo2.id = '13';
+  
+  console.log(todo1, todo2);
 })();
