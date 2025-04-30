@@ -21,6 +21,7 @@
   }
 
   // welcome 함수에 Guest 타입의 member를 전달해야 하지만 타입 호환이 가능한 타입도 전달 가능
-  welcome(haru);
+  welcome(haru); // 하루는 Guest로 name 속성만 존재하기 때문에 welcome 함수의 매개변수 Guest를 Member로 바꾸면 에러남
+  welcome(namu); // 나무는 Member라 Guest인 하루보다 속성 범위가 더 많아서 welcome 함수에서 호출할 때 Guest 타입으로 작성해도 값이 출력된다.
 
 })();
