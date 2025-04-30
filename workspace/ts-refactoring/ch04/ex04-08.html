@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Javascript Lab</title>
+    <script src="../js/mylib.js"></script>
+    <script>
+      window.onload = function () {
+        // 문서내의 모든 버튼을 클릭했을때
+        // 각각 "btn-0 클릭", "btn-1 클릭", "btn-2 클릭"
+        // ... "btn-n 클릭"을 콘솔에 출력하시오.
+        const btns = document.querySelectorAll("button");
+        // IIFE pattern (즉시 실행 함수)
+        for (var i = 0; i < btns.length; i++) {
+          ((num) => {
+            // num 자리가 인자값 받는 자리
+            btns[i].addEventListener("click", function () {
+              // 이벤트 핸들러로 발생한 버튼이 this가 된다.
+              console.log(`btn-${num} 클릭`); // i값 바뀔 때마다 btn-0, btn-1...로 바뀜
+            });
+          })(i); // 함수의 인자값으로 i 전달
+        }
+
+        // ECMA5 forEach
+        // 배열에 forEach 메서드 사용
+        // Array.prototype.forEach: 배열의 각 요소를 순회하면서 지정한 콜백 함수를 실행
+        // 콜백 함수는 첫 번째 인자로 배열의 요소, 두 번째 인자로 요소의 인덱스를 전달받는다.
+        // [btn1, btn2, btn3].forEach((btn, i) => {});
+        // 정확히 말하면 지금 형태는 배열은 아님. 지금은 유사배열객체다. 배열로 가정하고 보고 있는 상황이다.
+        btns.forEach(function (bnt, i) {
+          btns[i].addEventListener("click", function () {
+            console.log(`btn-${i} 클릭`); // 버튼 모음 중 버튼 1개 넘어오고, 인덱스 따라옴
+          });
+        });
+        /* 이렇게 화살표함수로 가능
+        arr.forEach((item, index, array) => {
+          // item: 현재 요소
+          // index: 현재 인덱스
+          // array: 배열
+        });*/
+
+        // ECMA6 let
+        for (let i = 0; i < btns.length; i++) {
+          btns[i].addEventListener("click", function () {
+            console.log(`btn-${i} 클릭`);
+          });
+        }
+      };
+    </script>
+  </head>
+  <body>
+    <h1>즉시 실행 함수</h1>
+    <button>버튼</button>
+    <button>버튼</button>
+    <button>버튼</button>
+  </body>
+</html>
