@@ -3,6 +3,10 @@
 PPT/~$*
 tempCode**.js
 node_modules
+workspace/ch05/ajax/**/*.js
+workspace/ch05/bom/**/*.js
 workspace/ch06/*.js
 workspace/ch07/*.js
-workspace/ts-refactoring/*/*.js
+workspace/ch08/*.js
+workspace/ch08/**/*.js
+workspace/ts-refactoring/**/*.js
