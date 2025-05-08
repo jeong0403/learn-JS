@@ -1,8 +1,27 @@
 {
   "scripts": {
-    "start": "live-server workspace --port=3000 --host=localhost"
+    "start": "live-server workspace --port=3000 --host=0.0.0.0"
   },
   "devDependencies": {
     "live-server": "^1.2.2"
-  }
+  },
+  "dependencies": {
+    "@types/axios": "^0.9.36"
+  },
+  "name": "js",
+  "version": "1.0.0",
+  "description": "- 모던 자바스크립트 튜토리얼: <https://ko.javascript.info>\r - MDN 자바스크립트: <https://developer.mozilla.org/ko/docs/Web/JavaScript>",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeong0403/learn-JS.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/jeong0403/learn-JS/issues"
+  },
+  "homepage": "https://github.com/jeong0403/learn-JS#readme"
 }
