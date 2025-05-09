@@ -6,7 +6,8 @@
     "live-server": "^1.2.2"
   },
   "dependencies": {
-    "@types/axios": "^0.9.36"
+    "@types/axios": "^0.9.36",
+    "@types/socket.io-client": "^1.4.36"
   },
   "name": "js",
   "version": "1.0.0",
