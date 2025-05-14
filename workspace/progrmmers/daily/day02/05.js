@@ -27,6 +27,13 @@ my_string	overwrite_string	s	result
 */
 
 function solution(my_string, overwrite_string, s) {
-  var answer = '';
+  // cf01) my_string = 'He11oWor1d', overwrite_string = 'lloWorl', s = 2
+  const firstWord = my_string.slice(0, s); // He 꺼내기 s번째 앞까지 꺼내서 자름
+  const lastWord = my_string.slice(s + overwrite_string.length); // 두 번째 인자 설정하지 않으면 끝까지 뽑음
+  var answer = firstWord + overwrite_string + lastWord;
   return answer;
 }
+
+// 프로그래머스에서 함수만 만들면 되기 때문에 아래 호출을 작성하지 않아도 통과 됨
+// console.log(solution("He11oWor1d", "lloWorl", 2) === "HelloWorld");
+// console.log(solution("Program29b8UYP", "merS123", 7) === "ProgrammerS123");
