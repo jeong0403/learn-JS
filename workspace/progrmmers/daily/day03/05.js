@@ -29,5 +29,11 @@ a ⊕ b = 912 이고, 2 * a * b = 364 입니다. 둘 중 더 큰 값은 912 이�
 
 function solution(a, b) {
   var answer = 0;
+
+  const r1 = parseInt(a + "" + b);
+  const r2 = 2 * a * b;
+
+  answer = r1 > r2 ? r1 : r2;
+
   return answer;
 }
