@@ -33,5 +33,20 @@ arr	queries	result
 
 function solution(arr, queries) {
   var answer = [];
+
+  for(let query of queries){
+    const [s, e, k] = query; // [0, 4, 2], [3, 4, 2]
+    let min = 9999999;
+    for(let i = s; i <= e; i++) {
+      // console.log(arr[i]);
+      if(arr[i] > k && arr[i] < min) { // [0, 4, 2] -> 0 < 9999999, 1 < 0, 2 < 0, 4 < 0, 3 < 0, [3, 4, 2] -> 4 < 9999999
+        min = arr[i]; // min = 0
+      }
+    }
+    answer.push(min === 9999999 ? -1 : min);
+  }
+
   return answer;
 }
+
+console.log(solution([0, 1, 2, 4, 3],	[[0, 4, 2],[0, 3, 2],[0, 2, 2]])) // [3, 4, -1]
