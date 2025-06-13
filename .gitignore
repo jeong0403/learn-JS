@@ -11,3 +11,8 @@ workspace/ch07/*.js
 workspace/ch08/*.js
 workspace/ch08/**/*.js
 workspace/ts-refactoring/**/*.js
+### OSX ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
